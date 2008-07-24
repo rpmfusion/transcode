@@ -1,0 +1,12 @@
+diff -up transcode-1.0.4/configure.in.original transcode-1.0.4/configure.in
+--- transcode-1.0.4/configure.in.original	2007-09-29 22:25:45.000000000 +0300
++++ transcode-1.0.4/configure.in	2007-09-29 22:26:34.000000000 +0300
+@@ -1008,7 +1008,7 @@ TC_PKG_HAVE(libdv, LIBDV)
+ dnl
+ dnl libquicktime
+ dnl
+-LIBQUICKTIME_EXTRA_LIBS="$LIBQUICKTIME_EXTRA_LIBS -lpng -lz $PTHREAD_LIBS -lm $LIBDV_LIBS"
++LIBQUICKTIME_EXTRA_LIBS="$LIBQUICKTIME_EXTRA_LIBS -lz $PTHREAD_LIBS -lm $LIBDV_LIBS"
+ TC_PKG_CHECK(libquicktime, no, LIBQUICKTIME, lqt-config, [quicktime.h],
+  quicktime, lqt_rows_alloc, libquicktime,
+  [http://libquicktime.sourceforge.net/])
