@@ -1,0 +1,12 @@
+diff -up transcode-1.0.4/filter/preview/Makefile.am.original transcode-1.0.4/filter/preview/Makefile.am
+--- transcode-1.0.4/filter/preview/Makefile.am.original	2007-09-28 22:19:51.000000000 +0300
++++ transcode-1.0.4/filter/preview/Makefile.am	2007-09-28 22:23:12.000000000 +0300
+@@ -53,7 +53,6 @@ filter_pv_la_LIBADD = \
+ 
+ EXTRA_DIST = \
+ 	display.h \
+-	dv_types.h \
+ 	filter_preview.h \
+ 	font_xpm.h \
+ 	pv.h
+Only in transcode-1.0.4.original/filter/preview: dv_types.h

@@ -1,0 +1,43 @@
+diff -up transcode-1.0.5/configure.in.libdvdread transcode-1.0.5/configure.in
+--- transcode-1.0.5/configure.in.libdvdread	2008-07-05 21:33:59.000000000 +0300
++++ transcode-1.0.5/configure.in	2008-07-05 21:34:00.000000000 +0300
+@@ -947,7 +947,7 @@ if test x"$have_libdvdread" = x"yes" ; t
+   libdvdread_inc="no"
+   save_CPPFLAGS="$CPPFLAGS"
+   CPPFLAGS="$CPPFLAGS $libdvdread_ii"
+-  AC_CHECK_HEADER([dvdread/dvd_reader.h],
++  AC_CHECK_HEADER([libdvdread/dvd_reader.h],
+     [AC_DEFINE([HAVE_LIBDVDREAD_INC], [1],
+       [have libdvdread includes in separate path])
+     libdvdread_inc="yes"])
+--- transcode-1.0.5/import/dvd_reader.c.libdvdread	2008-07-05 21:41:22.000000000 +0300
++++ transcode-1.0.5/import/dvd_reader.c	2008-07-05 21:41:37.000000000 +0300
+@@ -31,11 +31,11 @@
+ #ifdef HAVE_LIBDVDREAD
+ 
+ #ifdef HAVE_LIBDVDREAD_INC
+-#include <dvdread/dvd_reader.h>
+-#include <dvdread/ifo_types.h>
+-#include <dvdread/ifo_read.h>
+-#include <dvdread/nav_read.h>
+-#include <dvdread/nav_print.h>
++#include <libdvdread/dvd_reader.h>
++#include <libdvdread/ifo_types.h>
++#include <libdvdread/ifo_read.h>
++#include <libdvdread/nav_read.h>
++#include <libdvdread/nav_print.h>
+ #else
+ #include <dvd_reader.h>
+ #include <ifo_types.h>
+diff -up transcode-1.0.5/import/iodump.c.libdvdread transcode-1.0.5/import/iodump.c
+--- transcode-1.0.5/import/iodump.c.libdvdread	2008-07-05 21:43:27.000000000 +0300
++++ transcode-1.0.5/import/iodump.c	2008-07-05 21:43:52.000000000 +0300
+@@ -31,7 +31,7 @@
+ 
+ #ifdef HAVE_LIBDVDREAD
+ #ifdef HAVE_LIBDVDREAD_INC
+-#include <dvdread/dvd_reader.h>
++#include <libdvdread/dvd_reader.h>
+ #else
+ #include <dvd_reader.h>
+ #endif
