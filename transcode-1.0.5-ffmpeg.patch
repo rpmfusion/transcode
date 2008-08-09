@@ -1,0 +1,138 @@
+diff -up transcode-1.0.5/acinclude.m4.orig transcode-1.0.5/acinclude.m4
+diff -up transcode-1.0.5/configure.in.orig transcode-1.0.5/configure.in
+--- transcode-1.0.5/configure.in.orig	2008-07-03 20:02:33.000000000 +0300
++++ transcode-1.0.5/configure.in	2008-07-05 12:14:24.000000000 +0300
+@@ -611,14 +611,14 @@ AC_ARG_ENABLE(libavcodec-static,
+   esac],
+   [enable_libavcodec_static=no])
+ LIBAVCODEC_EXTRA_LIBS="$LIBAVCODEC_EXTRA_LIBS $($PKG_CONFIG --libs libavcodec)"
+-TC_PKG_CHECK(libavcodec, required, LIBAVCODEC, no, [ffmpeg/avcodec.h],
+- avcodec, avcodec_thread_init, FFMpeg, [http://www.ffmpeg.org/])
++TC_PKG_CHECK(libavcodec, required, LIBAVCODEC, no, [ffmpeg/libavcodec/avcodec.h],
++ avcodec, avcodec_thread_init, libavcodec, [http://www.ffmpeg.org/])
+ if test x"$have_libavcodec" = x"yes" ; then
+   save_CPPFLAGS="$CPPFLAGS"
+   CPPFLAGS="$CPPFLAGS $LIBAVCODEC_CFLAGS"
+   AC_TRY_RUN([
+ #include <stdio.h>
+-#include <ffmpeg/avcodec.h>
++#include <libavcodec/avcodec.h>
+ int
+ main()
+ {
+@@ -640,8 +640,8 @@ main()
+ ],
+     [LIBAVCODEC_VERSION="`./conftest$ac_exeext | sed -ne 's,VER=\(.*\),\1,p'`"
+       LIBAVCODEC_BUILD="`./conftest$ac_exeext | sed -ne 's,BUILD=\(.*\),\1,p'`"],
+-    [TC_PKG_ERROR(libavcodec, ffmpeg/avcodec.h, required, libavcodec, [http://www.ffmpeg.org],
+-      [cannot compile ffmpeg/avcodec.h])],
++    [TC_PKG_ERROR(libavcodec, libavcodec/avcodec.h, required, libavcodec, [http://www.ffmpeg.org],
++      [cannot compile libavcodec/avcodec.h])],
+     [echo $ac_n "cross compiling; assumed OK... $ac_c"
+       LIBAVCODEC_VERSION=""
+       LIBAVCODEC_BUILD=""])
+@@ -820,7 +820,7 @@ AM_CONDITIONAL(HAVE_IBP, test x"$have_ib
+ dnl
+ dnl libpostproc
+ dnl
+-TC_PKG_CHECK(libpostproc, no, LIBPOSTPROC, no, postprocess.h,
++TC_PKG_CHECK(libpostproc, no, LIBPOSTPROC, no, libpostproc/postprocess.h,
+   postproc, pp_postprocess, libpostproc, [http://www.ffmpeg.org/])
+ TC_PKG_HAVE(libpostproc, LIBPOSTPROC)
+ 
+diff -up transcode-1.0.5/export/export_ffmpeg.c.orig transcode-1.0.5/export/export_ffmpeg.c
+--- transcode-1.0.5/export/export_ffmpeg.c.orig	2008-07-03 20:37:46.000000000 +0300
++++ transcode-1.0.5/export/export_ffmpeg.c	2008-07-03 20:38:05.000000000 +0300
+@@ -36,7 +36,7 @@
+ #include "vid_aux.h"
+ // FIXME
+ #undef EMULATE_FAST_INT
+-#include <ffmpeg/avcodec.h>
++#include <libavcodec/avcodec.h>
+ 
+ #if !defined(INFINITY) && defined(HUGE_VAL)
+ #define INFINITY HUGE_VAL
+diff -up transcode-1.0.5/export/ffmpeg_cfg.h.orig transcode-1.0.5/export/ffmpeg_cfg.h
+--- transcode-1.0.5/export/ffmpeg_cfg.h.orig	2008-07-03 20:37:00.000000000 +0300
++++ transcode-1.0.5/export/ffmpeg_cfg.h	2008-07-03 20:37:20.000000000 +0300
+@@ -2,7 +2,7 @@
+ #define __FFMPEG_CFG_H
+ 
+ #include "libioaux/configs.h"
+-#include <ffmpeg/avcodec.h>
++#include <libavcodec/avcodec.h>
+ 
+ //char *lavc_param_vcodec = "mpeg4";
+ //extern int lavc_param_vbitrate;
+diff -up transcode-1.0.5/filter/filter_resample.c.orig transcode-1.0.5/filter/filter_resample.c
+--- transcode-1.0.5/filter/filter_resample.c.orig	2008-07-03 20:38:33.000000000 +0300
++++ transcode-1.0.5/filter/filter_resample.c	2008-07-03 20:38:50.000000000 +0300
+@@ -30,7 +30,7 @@
+ #include "filter.h"
+ #include "optstr.h"
+ 
+-#include <ffmpeg/avcodec.h>
++#include <libavcodec/avcodec.h>
+ 
+ static char * resample_buffer = NULL;
+ static int bytes_per_sample;
+diff -up transcode-1.0.5/filter/pp/filter_pp.c.orig transcode-1.0.5/filter/pp/filter_pp.c
+--- transcode-1.0.5/filter/pp/filter_pp.c.orig	2008-07-05 12:28:19.000000000 +0300
++++ transcode-1.0.5/filter/pp/filter_pp.c	2008-07-05 12:28:48.000000000 +0300
+@@ -35,7 +35,7 @@
+ #include <ctype.h>
+ #include <inttypes.h>
+ 
+-#include "postprocess.h"
++#include "libpostproc/postprocess.h"
+ 
+ static pp_mode_t *mode[MAX_FILTER];
+ static pp_context_t *context[MAX_FILTER];
+diff -up transcode-1.0.5/import/decode_lavc.c.orig transcode-1.0.5/import/decode_lavc.c
+--- transcode-1.0.5/import/decode_lavc.c.orig	2008-07-03 20:39:16.000000000 +0300
++++ transcode-1.0.5/import/decode_lavc.c	2008-07-03 20:39:44.000000000 +0300
+@@ -31,7 +31,7 @@
+ #ifdef EMULATE_FAST_INT
+ #undef EMULATE_FAST_INT
+ #endif
+-#include <ffmpeg/avcodec.h>
++#include <libavcodec/avcodec.h>
+ #include "yuv2rgb.h"
+ 
+ #define READ_BUFFER_SIZE (10*1024*1024)
+diff -up transcode-1.0.5/import/import_ffmpeg.c.orig transcode-1.0.5/import/import_ffmpeg.c
+--- transcode-1.0.5/import/import_ffmpeg.c.orig	2008-07-03 20:40:05.000000000 +0300
++++ transcode-1.0.5/import/import_ffmpeg.c	2008-07-03 20:40:25.000000000 +0300
+@@ -38,7 +38,7 @@ static int capability_flag = TC_CAP_YUV 
+ 
+ // FIXME
+ #undef EMULATE_FAST_INT
+-#include <ffmpeg/avcodec.h>
++#include <libavcodec/avcodec.h>
+ 
+ #include "libvo/yuv2rgb.h"
+ #include "avilib/avilib.h"
+diff -up transcode-1.0.5/src/transcode.c.orig transcode-1.0.5/src/transcode.c
+--- transcode-1.0.5/src/transcode.c.orig	2008-01-05 16:37:15.000000000 +0200
++++ transcode-1.0.5/src/transcode.c	2008-07-03 20:41:27.000000000 +0300
+@@ -4609,7 +4609,7 @@ int main(int argc, char *argv[]) {
+ // unneeded object files from a .a file.
+ 
+ #if 0
+-#include <ffmpeg/avcodec.h>
++#include <libavcodec/avcodec.h>
+ 
+ void dummy_avcodec(void) {
+   AVCodecContext *ctx = NULL;
+diff -up transcode-1.0.5/export/aud_aux.c.orig transcode-1.0.5/export/aud_aux.c
+--- transcode-1.0.5/export/aud_aux.c.orig	2008-07-05 23:14:48.000000000 +0300
++++ transcode-1.0.5/export/aud_aux.c	2008-07-05 23:15:33.000000000 +0300
+@@ -31,7 +31,7 @@
+ #include <inttypes.h>
+ #include <assert.h>
+ 
+-#include <ffmpeg/avcodec.h>
++#include <libavcodec/avcodec.h>
+ 
+ #include "aud_aux.h"
+ #include "ac3.h"
