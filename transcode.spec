@@ -7,7 +7,7 @@
 
 Name:           transcode
 Version:        1.0.6
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Video stream processing tool
 
 Group:          Applications/Multimedia
@@ -129,6 +129,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Sat Aug  9 2008 David Juran <david@juran.se> - 1.0.6-2
+- bump release for rpmfusion
+
 * Fri Aug 8 2008 <david@juran.se> - 1.0.6-1
 - upgraded to 1.0.6
 - fix rpmlint warnings
