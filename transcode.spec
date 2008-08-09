@@ -6,8 +6,8 @@
 %define pvmdir  %{_datadir}/pvm3
 
 Name:           transcode
-Version:        1.0.5
-Release:        4%{?dist}
+Version:        1.0.6
+Release:        1%{?dist}
 Summary:        Video stream processing tool
 
 Group:          Applications/Multimedia
@@ -15,12 +15,9 @@ License:        GPLv2+
 URL:            http://www.transcoding.org/
 Source0:        http://fromani.exit1.org/%{name}-%{version}.tar.bz2
 Patch0:         %{name}-pvmbin.patch
-Patch2:         %{name}-1.0.2-lzo2.patch
-Patch3:		transcode-1.0.4.external_dv.patch
-Patch6:		transcode-1.0.5-nuv.patch
-Patch7: 	transcode-1.0.5-ffmpeg.patch
-Patch8:		transcode-1.0.5-dvdread.patch
-Patch9:		transcode-1.0.5-ImageMagick.patch
+Patch3:         transcode-1.0.4.external_dv.patch
+Patch8:         transcode-1.0.5-dvdread.patch
+Patch9:         transcode-1.0.5-ImageMagick.patch
 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -49,7 +46,7 @@ BuildRequires:  freetype-devel
 BuildRequires:  nasm
 %endif
 BuildRequires:  ImageMagick-devel >= 6.4.0.10
-BuildRequires:	libmpeg3-devel
+BuildRequires:  libmpeg3-devel
 
 # libtool + autotools for patch2, autoreconf
 BuildRequires:  libtool
@@ -71,11 +68,8 @@ enable post-processing of AVI files.
 %prep
 %setup -q
 %patch0 -p1 -b .pvmbin
-%patch2 -p1 -b .lzo
 %patch3 -p1 -b .external_dv
 rm filter/preview/dv_types.h
-%patch6 -p1 -b .types
-%patch7 -p1 -b .ffmpeg 
 %patch8 -p1 -b .libdvdread
 %patch9 -p1 -b .ImageMagick
 
@@ -104,14 +98,15 @@ done
         --enable-libquicktime                                   \
         --enable-lzo                                            \
         --enable-a52                                            \
-	--enable-a52-default-decoder                            \
+        --enable-a52-default-decoder                            \
         --enable-libxml2                                        \
         --enable-mjpegtools                                     \
         --enable-sdl                                            \
-        --enable-imagemagick					\
-	--enable-libmpeg3
+        --enable-imagemagick                                    \
+        --enable-libmpeg3                                       \
+        CFLAGS=-I/usr/include/ffmpeg HAVE_LIBAVCODEC_AVCODEC_H=1
 
-make %{?_smp_mflags}
+make %{?_smp_mflags}  HAVE_LIBAVCODEC_AVCODEC_H=1 CFLAGS="-I/usr/include/ffmpeg -I/usr/include/ffmpeg/libpostproc  -D_LARGEFILE64_SOURCE"
 
 
 %install
@@ -134,8 +129,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
-* Thu Aug 07 2008 Thorsten Leemhuis <fedora [AT] leemhuis [DOT] info - 1.0.5-4
-- rebuild
+* Fri Aug 8 2008 <david@juran.se> - 1.0.6-1
+- upgraded to 1.0.6
+- fix rpmlint warnings
 
 * Thu Jul  3 2008  <david@juran.se> - 1.0.5-3
 - updated for new ffmpeg directory layout
