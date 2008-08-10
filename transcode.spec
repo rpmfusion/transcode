@@ -7,7 +7,7 @@
 
 Name:           transcode
 Version:        1.0.4
-Release:        6%{?dist}
+Release:        7%{?dist}
 Summary:        Video stream processing tool
 
 Group:          Applications/Multimedia
@@ -34,7 +34,7 @@ BuildRequires:  xvidcore-devel
 BuildRequires:  libquicktime-devel >= 0.9.8
 BuildRequires:  lame-devel >= 3.89
 BuildRequires:  SDL-devel >= 1.1.6
-BuildRequires:  ffmpeg-devel >= 0.4.9
+BuildRequires:  ffmpeg-compat-devel >= 0.4.9
 BuildRequires:  mpeg2dec-devel >= 0.4.0-0.lvn.3.b
 BuildRequires:  pvm
 BuildRequires:  libtheora-devel
@@ -131,6 +131,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Sun Aug 10 2008 David Juran <david@juran.se> - 1.0.4-7
+- exchange ffmpeg for ffmpeg-compat
+
 * Sun Aug 10 2008 David Juran <david@juran.se> - 1.0.4-6
 - bump for rpmfusion
 
