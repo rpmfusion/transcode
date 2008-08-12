@@ -7,7 +7,7 @@
 
 Name:           transcode
 Version:        1.0.4
-Release:        7%{?dist}
+Release:        8%{?dist}
 Summary:        Video stream processing tool
 
 Group:          Applications/Multimedia
@@ -19,6 +19,7 @@ Patch2:         %{name}-1.0.2-lzo2.patch
 Patch3:		transcode-1.0.4.external_dv.patch
 Patch4:		transcode-1.0.4.dep-cleanup.patch
 Patch5:		transcode-1.0.4-shared_libmpeg3.patch
+Patch6:		transcode-1.0.5-ffmpeg.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildRequires:  libogg-devel
@@ -34,7 +35,7 @@ BuildRequires:  xvidcore-devel
 BuildRequires:  libquicktime-devel >= 0.9.8
 BuildRequires:  lame-devel >= 3.89
 BuildRequires:  SDL-devel >= 1.1.6
-BuildRequires:  ffmpeg-compat-devel >= 0.4.9
+BuildRequires:  ffmpeg-devel >= 0.4.9
 BuildRequires:  mpeg2dec-devel >= 0.4.0-0.lvn.3.b
 BuildRequires:  pvm
 BuildRequires:  libtheora-devel
@@ -73,7 +74,7 @@ enable post-processing of AVI files.
 rm filter/preview/dv_types.h
 %patch4 -p1 -b .dep-cleanup
 %patch5 -p1 -b .shared-libmpeg3
-
+%patch6 -p1 -b .ffmpeg
 
 %build
 autoreconf # for patch2, and fixes standard rpaths on lib64 archs
@@ -131,6 +132,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Tue Aug 12 2008 David Juran <david@juran.se> - 1.0.4-8
+- Back to ffmpeg and apply patch for new structure
+
 * Sun Aug 10 2008 David Juran <david@juran.se> - 1.0.4-7
 - exchange ffmpeg for ffmpeg-compat
 
