@@ -7,7 +7,7 @@
 
 Name:           transcode
 Version:        1.0.4
-Release:        8%{?dist}
+Release:        9%{?dist}
 Summary:        Video stream processing tool
 
 Group:          Applications/Multimedia
@@ -90,7 +90,6 @@ done
         --enable-v4l                                            \
         --enable-oss                                            \
         --enable-libpostproc                                    \
-        --with-libpostproc-includes=%{_includedir}/postproc     \
         --enable-freetype2                                      \
         --enable-ogg                                            \
         --enable-vorbis                                         \
@@ -132,6 +131,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Sat Aug 16 2008 David Juran <david@juran.se> - 1.0.4-9
+- Hopefully better libpostproc include path
+
 * Tue Aug 12 2008 David Juran <david@juran.se> - 1.0.4-8
 - Back to ffmpeg and apply patch for new structure
 
