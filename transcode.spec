@@ -7,7 +7,7 @@
 
 Name:           transcode
 Version:        1.0.4
-Release:        9%{?dist}
+Release:        10%{?dist}
 Summary:        Video stream processing tool
 
 Group:          Applications/Multimedia
@@ -20,6 +20,7 @@ Patch3:		transcode-1.0.4.external_dv.patch
 Patch4:		transcode-1.0.4.dep-cleanup.patch
 Patch5:		transcode-1.0.4-shared_libmpeg3.patch
 Patch6:		transcode-1.0.5-ffmpeg.patch
+Patch7:		transcode-1.0.5-nuv.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildRequires:  libogg-devel
@@ -75,6 +76,7 @@ rm filter/preview/dv_types.h
 %patch4 -p1 -b .dep-cleanup
 %patch5 -p1 -b .shared-libmpeg3
 %patch6 -p1 -b .ffmpeg
+%patch7 -p1 -b .nuv
 
 %build
 autoreconf # for patch2, and fixes standard rpaths on lib64 archs
@@ -131,6 +133,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Sun Aug 17 2008 David Juran <david@juran.se> - 1.0.4-10
+- nuv-patch back
+
 * Sat Aug 16 2008 David Juran <david@juran.se> - 1.0.4-9
 - Hopefully better libpostproc include path
 
