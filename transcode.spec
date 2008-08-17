@@ -7,7 +7,7 @@
 
 Name:           transcode
 Version:        1.0.5
-Release:        4%{?dist}
+Release:        5%{?dist}
 Summary:        Video stream processing tool
 
 Group:          Applications/Multimedia
@@ -18,15 +18,13 @@ Patch0:         %{name}-pvmbin.patch
 Patch2:         %{name}-1.0.2-lzo2.patch
 Patch3:		transcode-1.0.4.external_dv.patch
 Patch6:		transcode-1.0.5-nuv.patch
-Patch7: 	transcode-1.0.5-ffmpeg.patch
-Patch8:		transcode-1.0.5-dvdread.patch
-Patch9:		transcode-1.0.5-ImageMagick.patch
+Patch7:		transcode-1.0.5-ffmpeg.patch
 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildRequires:  libogg-devel
 BuildRequires:  libvorbis-devel
-BuildRequires:  libdvdread-devel >= 4.1.3
+BuildRequires:  libdvdread-devel
 BuildRequires:  a52dec-devel
 BuildRequires:  libxml2-devel
 BuildRequires:  libjpeg-devel
@@ -37,7 +35,7 @@ BuildRequires:  xvidcore-devel
 BuildRequires:  libquicktime-devel >= 0.9.8
 BuildRequires:  lame-devel >= 3.89
 BuildRequires:  SDL-devel >= 1.1.6
-BuildRequires:  ffmpeg-devel >= 0.4.9-0.46.20080614
+BuildRequires:  ffmpeg-devel >= 0.4.9
 BuildRequires:  mpeg2dec-devel >= 0.4.0-0.lvn.3.b
 BuildRequires:  pvm
 BuildRequires:  libtheora-devel
@@ -48,7 +46,7 @@ BuildRequires:  freetype-devel
 %ifarch %{ix86}
 BuildRequires:  nasm
 %endif
-BuildRequires:  ImageMagick-devel >= 6.4.0.10
+BuildRequires:  ImageMagick-devel >= 5.4.3
 BuildRequires:	libmpeg3-devel
 
 # libtool + autotools for patch2, autoreconf
@@ -75,9 +73,7 @@ enable post-processing of AVI files.
 %patch3 -p1 -b .external_dv
 rm filter/preview/dv_types.h
 %patch6 -p1 -b .types
-%patch7 -p1 -b .ffmpeg 
-%patch8 -p1 -b .libdvdread
-%patch9 -p1 -b .ImageMagick
+%patch7 -p1 -b .ffmpeg
 
 %build
 autoreconf # for patch2, and fixes standard rpaths on lib64 archs
@@ -134,13 +130,8 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
-* Thu Aug 07 2008 Thorsten Leemhuis <fedora [AT] leemhuis [DOT] info - 1.0.5-4
-- rebuild
-
-* Thu Jul  3 2008  <david@juran.se> - 1.0.5-3
-- updated for new ffmpeg directory layout
-- updated for new libdvdread directory layout
-- libMagick split in libMagicCore and libMagicWand
+* Sun Aug 17 2008 David Juran <david@juran.se> - 1.0.5-5
+- Build for rpmfusion
 
 * Thu Jan 10 2008 David Juran <david@juran.se> - 1.0.5-1
 - Upgrade to 1.0.5
