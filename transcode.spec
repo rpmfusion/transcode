@@ -7,7 +7,7 @@
 
 Name:           transcode
 Version:        1.0.6
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        Video stream processing tool
 
 Group:          Applications/Multimedia
@@ -16,7 +16,6 @@ URL:            http://www.transcoding.org/
 Source0:        http://fromani.exit1.org/%{name}-%{version}.tar.bz2
 Patch0:         %{name}-pvmbin.patch
 Patch3:         transcode-1.0.4.external_dv.patch
-Patch8:         transcode-1.0.5-dvdread.patch
 Patch9:         transcode-1.0.5-ImageMagick.patch
 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
@@ -70,7 +69,6 @@ enable post-processing of AVI files.
 %patch0 -p1 -b .pvmbin
 %patch3 -p1 -b .external_dv
 rm filter/preview/dv_types.h
-%patch8 -p1 -b .libdvdread
 %patch9 -p1 -b .ImageMagick
 
 %build
@@ -129,6 +127,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Mon Nov 10 2008 David Juran <david@juran.se> - 1.0.6-3
+- drop libdvdread patch
+
 * Sat Aug  9 2008 David Juran <david@juran.se> - 1.0.6-2
 - bump release for rpmfusion
 
