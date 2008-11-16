@@ -6,8 +6,8 @@
 %define pvmdir  %{_datadir}/pvm3
 
 Name:           transcode
-Version:        1.0.6
-Release:        3%{?dist}
+Version:        1.0.7
+Release:        1%{?dist}
 Summary:        Video stream processing tool
 
 Group:          Applications/Multimedia
@@ -127,6 +127,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Sun Nov 16 2008 David Juran <david@juran.se> - 1.0.7-1
+- upgrade to 1.0.7
+
 * Mon Nov 10 2008 David Juran <david@juran.se> - 1.0.6-3
 - drop libdvdread patch
 
