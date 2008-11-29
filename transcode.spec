@@ -6,18 +6,16 @@
 %define pvmdir  %{_datadir}/pvm3
 
 Name:           transcode
-Version:        1.0.6
-Release:        2%{?dist}
+Version:        1.0.7
+Release:        1%{?dist}
 Summary:        Video stream processing tool
 
 Group:          Applications/Multimedia
 License:        GPLv2+
 URL:            http://www.transcoding.org/
 Source0:        http://fromani.exit1.org/%{name}-%{version}.tar.bz2
-Patch0:         %{name}-pvmbin.patch
-Patch3:         transcode-1.0.4.external_dv.patch
-Patch8:         transcode-1.0.5-dvdread.patch
-Patch9:         transcode-1.0.5-ImageMagick.patch
+Patch0:         transcode-1.0.7-pvmbin.patch
+Patch1:         transcode-1.0.7-dv.patch
 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -45,11 +43,8 @@ BuildRequires:  freetype-devel
 %ifarch %{ix86}
 BuildRequires:  nasm
 %endif
-BuildRequires:  ImageMagick-devel >= 6.4.0.10
+BuildRequires:  ImageMagick-devel
 BuildRequires:  libmpeg3-devel
-
-# libtool + autotools for patch2, autoreconf
-BuildRequires:  libtool
 
 Requires:       xvidcore
 
@@ -68,13 +63,11 @@ enable post-processing of AVI files.
 %prep
 %setup -q
 %patch0 -p1 -b .pvmbin
-%patch3 -p1 -b .external_dv
+%patch1 -p1 -b .dv
 rm filter/preview/dv_types.h
-%patch8 -p1 -b .libdvdread
-%patch9 -p1 -b .ImageMagick
+
 
 %build
-autoreconf # for patch2, and fixes standard rpaths on lib64 archs
 for file in docs/{man/*.1,export_mp2.txt,export_mpeg.txt,filter_dnr.txt} \
     AUTHORS ChangeLog README docs/README.vcd ; do
     iconv -f iso-8859-1 -t utf-8 $file > $file.utf8 && mv -f $file.utf8 $file
@@ -129,6 +122,12 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Fri Nov 28 2008 Orion Poplawski <orion@cora.nwra.com> - 1.0.7-1
+- upgrade to 1.0.7
+- Rework patches to avoid autotools (because of older autotools on EL-5)
+- Drop ImageMagick patch and BR version
+- drop libdvdread patch
+
 * Sat Aug  9 2008 David Juran <david@juran.se> - 1.0.6-2
 - bump release for rpmfusion
 
