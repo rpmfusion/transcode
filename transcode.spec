@@ -7,7 +7,7 @@
 
 Name:           transcode
 Version:        1.0.7
-Release:        1%{?dist}
+Release:        3%{?dist}
 Summary:        Video stream processing tool
 
 Group:          Applications/Multimedia
@@ -34,7 +34,7 @@ BuildRequires:  libquicktime-devel >= 0.9.8
 BuildRequires:  lame-devel >= 3.89
 BuildRequires:  SDL-devel >= 1.1.6
 BuildRequires:  ffmpeg-devel >= 0.4.9-0.46.20080614
-BuildRequires:  mpeg2dec-devel >= 0.4.0-0.lvn.3.b
+BuildRequires:  mpeg2dec-devel >= 0.4.0
 BuildRequires:  pvm
 BuildRequires:  libtheora-devel
 BuildRequires:  libXv-devel
@@ -72,7 +72,7 @@ rm filter/preview/dv_types.h
 %patch9 -p1 -b .ImageMagick
 
 %build
-autoreconf # for patch2, and fixes standard rpaths on lib64 archs
+autoreconf -f -i # for patch2, and fixes standard rpaths on lib64 archs
 for file in docs/{man/*.1,export_mp2.txt,export_mpeg.txt,filter_dnr.txt} \
     AUTHORS ChangeLog README docs/README.vcd ; do
     iconv -f iso-8859-1 -t utf-8 $file > $file.utf8 && mv -f $file.utf8 $file
@@ -101,17 +101,17 @@ done
         --enable-mjpegtools                                     \
         --enable-sdl                                            \
         --enable-imagemagick                                    \
-        --enable-libmpeg3                                       \
-        CFLAGS=-I/usr/include/ffmpeg HAVE_LIBAVCODEC_AVCODEC_H=1
+        --enable-libmpeg3
 
-make %{?_smp_mflags}  HAVE_LIBAVCODEC_AVCODEC_H=1 CFLAGS="-I/usr/include/ffmpeg -I/usr/include/ffmpeg/libpostproc  -D_LARGEFILE64_SOURCE"
+
+make %{?_smp_mflags}
 
 
 %install
 rm -rf $RPM_BUILD_ROOT __documentation
-make install DESTDIR=$RPM_BUILD_ROOT 
+make install DESTDIR=$RPM_BUILD_ROOT INSTALL="install -p"
 mv $RPM_BUILD_ROOT%{_docdir}/transcode/ __documentation
-rm -f $RPM_BUILD_ROOT%{_libdir}/%{name}/*.la
+find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 
 
 %clean
@@ -127,6 +127,15 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Tue Dec 16 2008 kwizart < wkizart at gmail.com > - 1.0.7-3
+- Re-enable the use of the default asm options
+  (to be tested on x86)
+
+* Thu Dec 11 2008 kwizart < wkizart at gmail.com > - 1.0.7-2
+- Fix autoreconf use
+- Fix CFLAGS
+- Fix asm options
+
 * Sun Nov 16 2008 David Juran <david@juran.se> - 1.0.7-1
 - upgrade to 1.0.7
 
