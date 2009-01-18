@@ -6,8 +6,8 @@
 %define pvmdir  %{_datadir}/pvm3
 
 Name:           transcode
-Version:        1.0.7
-Release:        3%{?dist}
+Version:        1.1.0
+Release:        1%{?dist}
 Summary:        Video stream processing tool
 
 Group:          Applications/Multimedia
@@ -16,7 +16,6 @@ URL:            http://www.transcoding.org/
 Source0:        http://fromani.exit1.org/%{name}-%{version}.tar.bz2
 Patch0:         %{name}-pvmbin.patch
 Patch3:         transcode-1.0.4.external_dv.patch
-Patch9:         transcode-1.0.5-ImageMagick.patch
 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -35,7 +34,6 @@ BuildRequires:  lame-devel >= 3.89
 BuildRequires:  SDL-devel >= 1.1.6
 BuildRequires:  ffmpeg-devel >= 0.4.9-0.46.20080614
 BuildRequires:  mpeg2dec-devel >= 0.4.0
-BuildRequires:  pvm
 BuildRequires:  libtheora-devel
 BuildRequires:  libXv-devel
 BuildRequires:  libXaw-devel
@@ -44,7 +42,7 @@ BuildRequires:  freetype-devel
 %ifarch %{ix86}
 BuildRequires:  nasm
 %endif
-BuildRequires:  ImageMagick-devel >= 6.4.0.10
+BuildRequires:  ImageMagick-devel
 BuildRequires:  libmpeg3-devel
 
 # libtool + autotools for patch2, autoreconf
@@ -69,7 +67,6 @@ enable post-processing of AVI files.
 %patch0 -p1 -b .pvmbin
 %patch3 -p1 -b .external_dv
 rm filter/preview/dv_types.h
-%patch9 -p1 -b .ImageMagick
 
 %build
 autoreconf -f -i # for patch2, and fixes standard rpaths on lib64 archs
@@ -89,9 +86,6 @@ done
         --enable-ogg                                            \
         --enable-vorbis                                         \
         --enable-theora                                         \
-        --enable-pvm3                                           \
-        --with-pvm3-libs=`ls -1d %{pvmdir}/lib/LINUX*`          \
-        --with-pvm3-includes=%{pvmdir}/include                  \
         --enable-libdv                                          \
         --enable-libquicktime                                   \
         --enable-lzo                                            \
@@ -127,6 +121,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Sun Jan 18 2009 David Juran <david@juran.se> - 1.1.0-1
+- upgrade to 1.1.0
+
 * Tue Dec 16 2008 kwizart < wkizart at gmail.com > - 1.0.7-3
 - Re-enable the use of the default asm options
   (to be tested on x86)
