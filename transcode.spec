@@ -7,7 +7,7 @@
 
 Name:           transcode
 Version:        1.1.0
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        Video stream processing tool
 
 Group:          Applications/Multimedia
@@ -122,6 +122,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Fri Jan 23 2009 David Juran <david@juran.se> - 1.1.0-3
+- thick fingers
+
 * Fri Jan 23 2009 David Juran <david@juran.se> - 1.1.0-2
 - enable deprecated (broken?) features
 
