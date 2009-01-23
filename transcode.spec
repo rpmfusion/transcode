@@ -7,7 +7,7 @@
 
 Name:           transcode
 Version:        1.1.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Video stream processing tool
 
 Group:          Applications/Multimedia
@@ -95,7 +95,8 @@ done
         --enable-mjpegtools                                     \
         --enable-sdl                                            \
         --enable-imagemagick                                    \
-        --enable-libmpeg3
+        --enable-libmpeg3                                       \
+        --enable-deprecated
 
 
 make %{?_smp_mflags}
@@ -121,6 +122,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Fri Jan 23 2009 David Juran <david@juran.se> - 1.1.0-2
+- enable deprecated (broken?) features
+
 * Sun Jan 18 2009 David Juran <david@juran.se> - 1.1.0-1
 - upgrade to 1.1.0
 
