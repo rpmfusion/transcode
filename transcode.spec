@@ -7,7 +7,7 @@
 
 Name:           transcode
 Version:        1.1.1
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        Video stream processing tool
 
 Group:          Applications/Multimedia
@@ -22,8 +22,7 @@ BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildRequires:  libogg-devel
 BuildRequires:  libvorbis-devel
 BuildRequires:  libdvdread-devel >= 4.1.3
-#Deprecated by ffmpeg 0.5
-#BuildRequires:  a52dec-devel
+BuildRequires:  a52dec-devel
 BuildRequires:  libxml2-devel
 BuildRequires:  libjpeg-devel
 BuildRequires:  lzo-devel >= 2
@@ -97,6 +96,7 @@ done
         --with-pvm3-includes=%{pvmdir}/include                  \
         --enable-libdv                                          \
         --enable-libquicktime                                   \
+        --enable-a52                                            \
         --enable-lzo                                            \
         --enable-faac                                           \
         --enable-libxml2                                        \
@@ -106,7 +106,9 @@ done
 %ifarch %{ix86}
         --enable-pv3                                            \
 %endif
+%ifarch %{ix86} x86_64
         --enable-nuv                                            \
+%endif
         --enable-deprecated
 
 
@@ -133,12 +135,12 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
-* Thu Mar 12 2009 kwizart < kwizart at gmail.com > - 1.1.1-2
+* Thu Mar 12 2009 kwizart < kwizart at gmail.com > - 1.1.1-4
 - Rebuild for ImageMagick
-- Disable liba52 (deprecated by ffmpeg 0.5)
 - Remove internal videodev.h videodev2.h (btw v4l1 is deprecated).
 - Re-enable faac pvm3 xvidcore x264
 - Enable pv3 only for %%{ix86}
+- Enable NuppelVideo only for %%{ix86} and x86_64
 
 * Sun Feb 22 2009 David Juran <david@juran.se> - 1.1.1-1
 - upgrade to 1.1.1
