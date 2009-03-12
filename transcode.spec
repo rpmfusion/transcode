@@ -7,7 +7,7 @@
 
 Name:           transcode
 Version:        1.1.1
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        Video stream processing tool
 
 Group:          Applications/Multimedia
@@ -103,7 +103,9 @@ done
         --enable-mjpegtools                                     \
         --enable-sdl                                            \
         --enable-imagemagick                                    \
+%ifarch %{ix86}
         --enable-pv3                                            \
+%endif
         --enable-nuv                                            \
         --enable-deprecated
 
@@ -136,6 +138,7 @@ rm -rf $RPM_BUILD_ROOT
 - Disable liba52 (deprecated by ffmpeg 0.5)
 - Remove internal videodev.h videodev2.h (btw v4l1 is deprecated).
 - Re-enable faac pvm3 xvidcore x264
+- Enable pv3 only for %%{ix86}
 
 * Sun Feb 22 2009 David Juran <david@juran.se> - 1.1.1-1
 - upgrade to 1.1.1
