@@ -7,7 +7,7 @@
 
 Name:           transcode
 Version:        1.1.1
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Video stream processing tool
 
 Group:          Applications/Multimedia
@@ -22,7 +22,8 @@ BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildRequires:  libogg-devel
 BuildRequires:  libvorbis-devel
 BuildRequires:  libdvdread-devel >= 4.1.3
-BuildRequires:  a52dec-devel
+#Deprecated by ffmpeg 0.5
+#BuildRequires:  a52dec-devel
 BuildRequires:  libxml2-devel
 BuildRequires:  libjpeg-devel
 BuildRequires:  lzo-devel >= 2
@@ -39,6 +40,9 @@ BuildRequires:  libXv-devel
 BuildRequires:  libXaw-devel
 BuildRequires:  libXpm-devel
 BuildRequires:  freetype-devel
+BuildRequires:  faac-devel
+BuildRequires:  pvm
+BuildRequires:  x264-devel
 %ifarch %{ix86}
 BuildRequires:  nasm
 %endif
@@ -47,8 +51,6 @@ BuildRequires:  libmpeg3-devel
 
 # libtool + autotools for patch2, autoreconf
 BuildRequires:  libtool
-
-Requires:       xvidcore
 
 
 %description
@@ -67,6 +69,8 @@ enable post-processing of AVI files.
 %patch0 -p1 -b .pvmbin
 %patch3 -p1 -b .external_dv
 rm filter/preview/dv_types.h
+rm import/v4l/videodev.h
+rm import/v4l/videodev2.h
 
 %build
 autoreconf -f -i # for patch2, and fixes standard rpaths on lib64 archs
@@ -78,24 +82,29 @@ done
 %configure \
         --disable-dependency-tracking                           \
         --with-x                                                \
-        --enable-netstream                                      \
-        --enable-v4l                                            \
-        --enable-oss                                            \
+        --enable-libavcodec                                     \
+        --enable-libavformat                                    \
+        --enable-alsa                                           \
         --enable-libpostproc                                    \
         --enable-freetype2                                      \
+        --enable-xvid                                           \
+        --enable-x264                                           \
         --enable-ogg                                            \
         --enable-vorbis                                         \
         --enable-theora                                         \
+        --enable-pvm3                                           \
+        --with-pvm3-libs=`ls -1d %{pvmdir}/lib/LINUX*`          \
+        --with-pvm3-includes=%{pvmdir}/include                  \
         --enable-libdv                                          \
         --enable-libquicktime                                   \
         --enable-lzo                                            \
-        --enable-a52                                            \
-        --enable-a52-default-decoder                            \
+        --enable-faac                                           \
         --enable-libxml2                                        \
         --enable-mjpegtools                                     \
         --enable-sdl                                            \
         --enable-imagemagick                                    \
-        --enable-libmpeg3                                       \
+        --enable-pv3                                            \
+        --enable-nuv                                            \
         --enable-deprecated
 
 
@@ -122,6 +131,12 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Thu Mar 12 2009 kwizart < kwizart at gmail.com > - 1.1.1-2
+- Rebuild for ImageMagick
+- Disable liba52 (deprecated by ffmpeg 0.5)
+- Remove internal videodev.h videodev2.h (btw v4l1 is deprecated).
+- Re-enable faac pvm3 xvidcore x264
+
 * Sun Feb 22 2009 David Juran <david@juran.se> - 1.1.1-1
 - upgrade to 1.1.1
 
@@ -134,11 +149,11 @@ rm -rf $RPM_BUILD_ROOT
 * Sun Jan 18 2009 David Juran <david@juran.se> - 1.1.0-1
 - upgrade to 1.1.0
 
-* Tue Dec 16 2008 kwizart < wkizart at gmail.com > - 1.0.7-3
+* Tue Dec 16 2008 kwizart < kwizart at gmail.com > - 1.0.7-3
 - Re-enable the use of the default asm options
   (to be tested on x86)
 
-* Thu Dec 11 2008 kwizart < wkizart at gmail.com > - 1.0.7-2
+* Thu Dec 11 2008 kwizart < kwizart at gmail.com > - 1.0.7-2
 - Fix autoreconf use
 - Fix CFLAGS
 - Fix asm options
