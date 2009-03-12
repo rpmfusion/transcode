@@ -7,7 +7,7 @@
 
 Name:           transcode
 Version:        1.0.7
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        Video stream processing tool
 
 Group:          Applications/Multimedia
@@ -35,12 +35,14 @@ BuildRequires:  lame-devel >= 3.89
 BuildRequires:  SDL-devel >= 1.1.6
 BuildRequires:  ffmpeg-devel >= 0.4.9-0.46.20080614
 BuildRequires:  mpeg2dec-devel >= 0.4.0-0.lvn.3.b
-BuildRequires:  pvm
 BuildRequires:  libtheora-devel
 BuildRequires:  libXv-devel
 BuildRequires:  libXaw-devel
 BuildRequires:  libXpm-devel
 BuildRequires:  freetype-devel
+BuildRequires:  faac-devel
+BuildRequires:  pvm
+BuildRequires:  x264-devel
 %ifarch %{ix86}
 BuildRequires:  nasm
 %endif
@@ -69,6 +71,8 @@ enable post-processing of AVI files.
 %patch0 -p1 -b .pvmbin
 %patch3 -p1 -b .external_dv
 rm filter/preview/dv_types.h
+rm import/v4l/videodev.h
+rm import/v4l/videodev2.h
 %patch9 -p1 -b .ImageMagick
 
 %build
@@ -81,11 +85,12 @@ done
 %configure \
         --disable-dependency-tracking                           \
         --with-x                                                \
-        --enable-netstream                                      \
-        --enable-v4l                                            \
         --enable-oss                                            \
+        --enable-alsa                                           \
         --enable-libpostproc                                    \
         --enable-freetype2                                      \
+        --enable-xvid                                           \
+        --enable-x264                                           \
         --enable-ogg                                            \
         --enable-vorbis                                         \
         --enable-theora                                         \
@@ -97,6 +102,7 @@ done
         --enable-lzo                                            \
         --enable-a52                                            \
         --enable-a52-default-decoder                            \
+        --enable-faac                                           \
         --enable-libxml2                                        \
         --enable-mjpegtools                                     \
         --enable-sdl                                            \
@@ -133,7 +139,10 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
-* Thu Dec 11 2008 kwizart < wkizart at gmail.com > - 1.0.7-2
+* Thu Mar 12 2009 kwizart < kwizart at gmail.com > - 1.0.7-3
+- Re-enable faac xvidcore x264
+
+* Thu Dec 11 2008 kwizart < kwizart at gmail.com > - 1.0.7-2
 - Fix autoreconf use
 - Fix CFLAGS
 - Fix asm options
