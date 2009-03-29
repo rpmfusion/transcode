@@ -7,7 +7,7 @@
 
 Name:           transcode
 Version:        1.1.1
-Release:        4%{?dist}
+Release:        5%{?dist}
 Summary:        Video stream processing tool
 
 Group:          Applications/Multimedia
@@ -135,6 +135,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Sun Mar 29 2009 Thorsten Leemhuis <fedora [AT] leemhuis [DOT] info> - 1.1.1-5
+- rebuild for new F11 features
+
 * Thu Mar 12 2009 kwizart < kwizart at gmail.com > - 1.1.1-4
 - Rebuild for ImageMagick
 - Remove internal videodev.h videodev2.h (btw v4l1 is deprecated).
