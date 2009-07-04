@@ -7,15 +7,16 @@
 
 Name:           transcode
 Version:        1.1.1
-Release:        5%{?dist}
+Release:        6%{?dist}
 Summary:        Video stream processing tool
 
 Group:          Applications/Multimedia
 License:        GPLv2+
-URL:            http://www.transcoding.org/
-Source0:        http://fromani.exit1.org/%{name}-%{version}.tar.bz2
+URL:            http://tcforge.berlios.de/
+Source0:        http://prdownload.berlios.de/tcforge/%{name}-%{version}.tar.bz2
 Patch0:         %{name}-pvmbin.patch
 Patch3:         transcode-1.0.4.external_dv.patch
+Patch4:		transcode-1.1.1-textrel.patch
 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -67,6 +68,7 @@ enable post-processing of AVI files.
 %setup -q
 %patch0 -p1 -b .pvmbin
 %patch3 -p1 -b .external_dv
+%patch4 -p1 -b .textrel
 rm filter/preview/dv_types.h
 rm import/v4l/videodev.h
 rm import/v4l/videodev2.h
@@ -80,6 +82,7 @@ done
 
 %configure \
         --disable-dependency-tracking                           \
+	--disable-x86-textrels                                  \
         --with-x                                                \
         --enable-libavcodec                                     \
         --enable-libavformat                                    \
@@ -135,6 +138,10 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Sat Jul  4 2009 David Juran <david@juran.se> - 1.1.1-6
+- Fix TEXTREL (Bz 658)
+- Update URL
+
 * Sun Mar 29 2009 Thorsten Leemhuis <fedora [AT] leemhuis [DOT] info> - 1.1.1-5
 - rebuild for new F11 features
 
