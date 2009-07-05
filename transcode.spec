@@ -6,8 +6,8 @@
 %define pvmdir  %{_datadir}/pvm3
 
 Name:           transcode
-Version:        1.1.1
-Release:        6%{?dist}
+Version:        1.1.2
+Release:        1%{?dist}
 Summary:        Video stream processing tool
 
 Group:          Applications/Multimedia
@@ -16,7 +16,7 @@ URL:            http://tcforge.berlios.de/
 Source0:        http://prdownload.berlios.de/tcforge/%{name}-%{version}.tar.bz2
 Patch0:         %{name}-pvmbin.patch
 Patch3:         transcode-1.0.4.external_dv.patch
-Patch4:		transcode-1.1.1-textrel.patch
+Patch4:         transcode-1.1.1-textrel.patch
 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -82,7 +82,7 @@ done
 
 %configure \
         --disable-dependency-tracking                           \
-	--disable-x86-textrels                                  \
+        --disable-x86-textrels                                  \
         --with-x                                                \
         --enable-libavcodec                                     \
         --enable-libavformat                                    \
@@ -138,6 +138,10 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Sun Jul  5 2009 David Juran <david@juran.se> - 1.1.2-1
+- Update to 1.1.2
+- Fix rpmlint errors
+
 * Sat Jul  4 2009 David Juran <david@juran.se> - 1.1.1-6
 - Fix TEXTREL (Bz 658)
 - Update URL
