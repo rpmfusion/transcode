@@ -6,7 +6,7 @@
 %define pvmdir  %{_datadir}/pvm3
 
 Name:           transcode
-Version:        1.1.2
+Version:        1.1.3
 Release:        1%{?dist}
 Summary:        Video stream processing tool
 
@@ -16,7 +16,6 @@ URL:            http://tcforge.berlios.de/
 Source0:        http://prdownload.berlios.de/tcforge/%{name}-%{version}.tar.bz2
 Patch0:         %{name}-pvmbin.patch
 Patch3:         transcode-1.0.4.external_dv.patch
-Patch4:         transcode-1.1.1-textrel.patch
 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -68,7 +67,7 @@ enable post-processing of AVI files.
 %setup -q
 %patch0 -p1 -b .pvmbin
 %patch3 -p1 -b .external_dv
-%patch4 -p1 -b .textrel
+
 rm filter/preview/dv_types.h
 rm import/v4l/videodev.h
 rm import/v4l/videodev2.h
@@ -138,6 +137,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Tue Jul 21 2009 David Juran <david@juran.se> - 1.1.3-1
+- Update to 1.1.3
+
 * Sun Jul  5 2009 David Juran <david@juran.se> - 1.1.2-1
 - Update to 1.1.2
 - Fix rpmlint errors
