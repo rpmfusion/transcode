@@ -7,7 +7,7 @@
 
 Name:           transcode
 Version:        1.1.3
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Video stream processing tool
 
 Group:          Applications/Multimedia
@@ -35,6 +35,7 @@ BuildRequires:  SDL-devel >= 1.1.6
 BuildRequires:  ffmpeg-devel >= 0.4.9-0.46.20080614
 BuildRequires:  mpeg2dec-devel >= 0.4.0
 BuildRequires:  libtheora-devel
+BuildRequires:	libXext-devel
 BuildRequires:  libXv-devel
 BuildRequires:  libXaw-devel
 BuildRequires:  libXpm-devel
@@ -137,6 +138,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Sat Jul 25 2009 David Juran <david@juran.se> - 1.1.3-2
+- Fix build problem
+
 * Tue Jul 21 2009 David Juran <david@juran.se> - 1.1.3-1
 - Update to 1.1.3
 
