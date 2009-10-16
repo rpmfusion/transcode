@@ -7,7 +7,7 @@
 
 Name:           transcode
 Version:        1.1.4
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Video stream processing tool
 
 Group:          Applications/Multimedia
@@ -40,7 +40,7 @@ BuildRequires:  libXv-devel
 BuildRequires:  libXaw-devel
 BuildRequires:  libXpm-devel
 BuildRequires:  freetype-devel
-BuildRequires:  faac-devel
+%{?_with_faac:BuildRequires: faac-devel}
 BuildRequires:  pvm
 BuildRequires:  x264-devel
 %ifarch %{ix86}
@@ -101,7 +101,7 @@ done
         --enable-libquicktime                                   \
         --enable-a52                                            \
         --enable-lzo                                            \
-        --enable-faac                                           \
+  %{?_with_faac:--enable-faac}                                  \
         --enable-libxml2                                        \
         --enable-mjpegtools                                     \
         --enable-sdl                                            \
@@ -138,6 +138,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Sat Oct 17 2009 kwizart < kwizart at gmail.com > - 1.1.4-2
+- Conditionalize faac (moved to nonfree).
+
 * Thu Aug 27 2009 David Juran <david@juran.se> - 1.1.4-1
 - update to 1.1.4
 
