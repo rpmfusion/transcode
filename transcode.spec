@@ -6,8 +6,8 @@
 %define pvmdir  %{_datadir}/pvm3
 
 Name:           transcode
-Version:        1.1.4
-Release:        2%{?dist}
+Version:        1.1.5
+Release:        1%{?dist}
 Summary:        Video stream processing tool
 
 Group:          Applications/Multimedia
@@ -16,6 +16,7 @@ URL:            http://tcforge.berlios.de/
 Source0:        http://prdownload.berlios.de/tcforge/%{name}-%{version}.tar.bz2
 Patch0:         %{name}-pvmbin.patch
 Patch3:         transcode-1.0.4.external_dv.patch
+Patch4:		transcode-1.1.5-fix_v4l.patch
 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -48,6 +49,8 @@ BuildRequires:  nasm
 %endif
 BuildRequires:  ImageMagick-devel
 BuildRequires:  libmpeg3-devel
+BuildRequires:	kernel-headers
+BuildRequires:	libv4l-devel
 
 # libtool + autotools for patch2, autoreconf
 BuildRequires:  libtool
@@ -68,6 +71,8 @@ enable post-processing of AVI files.
 %setup -q
 %patch0 -p1 -b .pvmbin
 %patch3 -p1 -b .external_dv
+%patch4	-p1 -b .fix_v4l
+
 
 rm filter/preview/dv_types.h
 rm import/v4l/videodev.h
@@ -112,7 +117,11 @@ done
 %ifarch %{ix86} x86_64
         --enable-nuv                                            \
 %endif
-        --enable-deprecated
+        --enable-deprecated					\
+	--enable-libv4l2					\
+	--enable-libv4lconvert					\
+	--enable-v4l
+
 
 
 make %{?_smp_mflags}
@@ -138,6 +147,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Sun Nov  1 2009 David Juran <david@juran.se> - 1.1.5-1
+- upgrade to 1.1.5
+
 * Sat Oct 17 2009 kwizart < kwizart at gmail.com > - 1.1.4-2
 - Conditionalize faac (moved to nonfree).
 

@@ -1,0 +1,36 @@
+diff -up transcode-1.1.5/acinclude.m4.fix_v4l transcode-1.1.5/acinclude.m4
+--- transcode-1.1.5/acinclude.m4.fix_v4l	2009-10-31 18:39:02.000000000 +0200
++++ transcode-1.1.5/acinclude.m4	2009-11-01 20:55:17.000000000 +0200
+@@ -189,7 +189,7 @@ if test x"$enable_v4l" = x"yes" ; then
+ #include <linux/videodev2.h>
+ ],   [
+ struct v4l2_buffer buf;
+-buffer.memory = V4L2_MEMORY_MMAP
++buf.memory = V4L2_MEMORY_MMAP
+ ],    [AC_DEFINE([HAVE_STRUCT_V4L2_BUFFER], 1,
+         [define if your videodev2 header has struct v4l2_buffer])
+         AC_MSG_RESULT([yes])],
+diff -up transcode-1.1.5/import/probe_v4l.c.fix_v4l transcode-1.1.5/import/probe_v4l.c
+--- transcode-1.1.5/import/probe_v4l.c.fix_v4l	2009-11-01 20:59:47.000000000 +0200
++++ transcode-1.1.5/import/probe_v4l.c	2009-11-01 21:00:09.000000000 +0200
+@@ -31,7 +31,7 @@
+ 
+ #include <sys/ioctl.h>
+ 
+-#include "v4l/videodev.h"
++#include <linux/videodev.h>
+ 
+ #if defined(HAVE_LINUX_VIDEODEV2_H) && defined(HAVE_STRUCT_V4L2_BUFFER)
+ #define _LINUX_TIME_H
+diff -up transcode-1.1.5/import/v4l/import_v4l.c.fix_v4l transcode-1.1.5/import/v4l/import_v4l.c
+--- transcode-1.1.5/import/v4l/import_v4l.c.fix_v4l	2009-02-21 23:01:57.000000000 +0200
++++ transcode-1.1.5/import/v4l/import_v4l.c	2009-11-01 20:55:17.000000000 +0200
+@@ -29,7 +29,7 @@
+ #include <sys/ioctl.h>
+ #include <sys/mman.h>
+ 
+-#include "videodev.h"
++#include <linux/videodev.h>
+ 
+ #define MOD_NAME    "import_v4l.so"
+ #define MOD_VERSION "v0.2.0 (2008-10-26)"
