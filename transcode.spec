@@ -7,7 +7,7 @@
 
 Name:           transcode
 Version:        1.1.5
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Video stream processing tool
 
 Group:          Applications/Multimedia
@@ -120,7 +120,10 @@ done
         --enable-deprecated					\
 	--enable-libv4l2					\
 	--enable-libv4lconvert					\
-	--enable-v4l
+	--enable-v4l						\
+	--enable-libmpeg2					\
+	--enable-libmpeg2convert
+
 
 
 
@@ -147,6 +150,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Sat Nov  7 2009 David Juran <david@juran.se> - 1.1.5-2
+- explicitly (re-)enabled libmpeg2 support (Bz 922)
+
 * Sun Nov  1 2009 David Juran <david@juran.se> - 1.1.5-1
 - upgrade to 1.1.5
 
