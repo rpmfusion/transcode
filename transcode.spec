@@ -7,7 +7,7 @@
 
 Name:           transcode
 Version:        1.1.5
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        Video stream processing tool
 
 Group:          Applications/Multimedia
@@ -16,7 +16,8 @@ URL:            http://tcforge.berlios.de/
 Source0:        http://prdownload.berlios.de/tcforge/%{name}-%{version}.tar.bz2
 Patch0:         %{name}-pvmbin.patch
 Patch3:         transcode-1.0.4.external_dv.patch
-Patch4:		transcode-1.1.5-fix_v4l.patch
+Patch4:	 transcode-1.1.5-fix_v4l.patch
+Patch5:	 transcode-1.1.5-no_video.patch	
 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -71,8 +72,8 @@ enable post-processing of AVI files.
 %setup -q
 %patch0 -p1 -b .pvmbin
 %patch3 -p1 -b .external_dv
-%patch4	-p1 -b .fix_v4l
-
+%patch4 -p1 -b .fix_v4l
+%patch5 -p1 -b .no_video
 
 rm filter/preview/dv_types.h
 rm import/v4l/videodev.h
@@ -150,6 +151,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Sat Jan 30 2010 David Juran <david@juran.se> - 1.1.5-3
+- fix crash when using no video with the ogg exporter (Bz 1060)
+
 * Sat Nov  7 2009 David Juran <david@juran.se> - 1.1.5-2
 - explicitly (re-)enabled libmpeg2 support (Bz 922)
 
