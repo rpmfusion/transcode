@@ -7,7 +7,7 @@
 
 Name:           transcode
 Version:        1.1.5
-Release:        3%{?dist}
+Release:        3%{?dist}.1
 Summary:        Video stream processing tool
 
 Group:          Applications/Multimedia
@@ -151,6 +151,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Tue May 18 2010 Thorsten Leemhuis <fedora [AT] leemhuis [DOT] info> - 1.1.5-3.1
+- rebuilt
+
 * Sat Jan 30 2010 David Juran <david@juran.se> - 1.1.5-3
 - fix crash when using no video with the ogg exporter (Bz 1060)
 
