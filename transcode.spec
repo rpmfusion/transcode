@@ -7,7 +7,7 @@
 
 Name:           transcode
 Version:        1.1.5
-Release:        4%{?dist}
+Release:        5%{?dist}
 Summary:        Video stream processing tool
 
 Group:          Applications/Multimedia
@@ -151,6 +151,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Thu Sep 30 2010 Nicolas Chauvet <kwizart@gmail.com> - 1.1.5-5
+- rebuilt for ImageMagick
+
 * Fri May 21 2010 David Juran <david@juran.se> - 1.1.5-4
 - Rebuild for new ImageMagick (Bz1188)
 
