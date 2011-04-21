@@ -1,0 +1,30 @@
+diff -up transcode-1.1.5/acinclude.m4.videodev2 transcode-1.1.5/acinclude.m4
+--- transcode-1.1.5/acinclude.m4.videodev2	2011-04-20 22:02:13.000000000 +0300
++++ transcode-1.1.5/acinclude.m4	2011-04-21 18:24:23.000000000 +0300
+@@ -175,11 +175,8 @@ AC_ARG_ENABLE(v4l,
+   [enable_v4l=no])
+ AC_MSG_RESULT($enable_v4l)
+ 
+-have_v4l=no
+-if test x"$enable_v4l" = x"yes" ; then
+-  AC_CHECK_HEADERS([linux/videodev.h], [v4l=yes], [v4l=no])
+-  AC_CHECK_HEADERS([linux/videodev2.h], [v4l2=yes], [v4l2=no],
+-    [#include <linux/types.h>])
++AC_CHECK_HEADERS([linux/videodev2.h], [v4l2=yes], [v4l2=no],
++  [#include <linux/types.h>])
+ 
+   if test x"$v4l2" = x"yes" ; then
+     AC_MSG_CHECKING([for struct v4l2_buffer in videodev2.h])
+@@ -196,6 +193,12 @@ buf.memory = V4L2_MEMORY_MMAP
+       [AC_MSG_RESULT([no])])
+   fi
+ 
++have_v4l=no
++if test x"$enable_v4l" = x"yes" ; then
++  AC_CHECK_HEADERS([linux/videodev.h], [v4l=yes], [v4l=no])
++
++
++
+   if test x"$v4l" = x"yes" -o x"$v4l2" = x"yes" ; then
+     have_v4l=yes
+     ifelse([$1], , :, [$1])
