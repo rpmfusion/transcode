@@ -7,7 +7,7 @@
 
 Name:           transcode
 Version:        1.1.5
-Release:        6%{?dist}
+Release:        7%{?dist}
 Summary:        Video stream processing tool
 
 Group:          Applications/Multimedia
@@ -17,9 +17,9 @@ Source0:        http://prdownload.berlios.de/tcforge/%{name}-%{version}.tar.bz2
 Patch0:         %{name}-pvmbin.patch
 Patch3:         transcode-1.0.4.external_dv.patch
 Patch4:	 transcode-1.1.5-fix_v4l.patch
-Patch5:	 transcode-1.1.5-no_video.patch	
+Patch5:	 transcode-1.1.5-no_video.patch
 Patch6:  transcode-1.1.5-videodev2.patch
-
+Patch7:  transcode-1.1.5-fix_v4l_1.patch
 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -77,6 +77,7 @@ enable post-processing of AVI files.
 %patch4 -p1 -b .fix_v4l
 %patch5 -p1 -b .no_video
 %patch6 -p1 -b .videodev2
+%patch7 -p1 -b .fix_v4l_1
 
 rm filter/preview/dv_types.h
 rm import/v4l/videodev.h
@@ -122,6 +123,7 @@ done
         --enable-nuv                                            \
 %endif
         --enable-deprecated					\
+	--enable-v4l						\
 	--enable-libv4l2					\
 	--enable-libv4lconvert					\
 	--enable-libmpeg2					\
@@ -153,6 +155,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Sun Jun 26 2011 Nicolas Chauvet <kwizart@gmail.com> - 1.1.5-7
+- Fix support for v4l - rfbz#1824
+
 * Wed Apr 20 2011 David Juran <david@juran.se> - 1.1.5-6
 - Disable v4l, Bz 1700
 
