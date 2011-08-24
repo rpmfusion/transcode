@@ -7,7 +7,7 @@
 
 Name:           transcode
 Version:        1.1.5
-Release:        7%{?dist}
+Release:        8%{?dist}
 Summary:        Video stream processing tool
 
 Group:          Applications/Multimedia
@@ -155,6 +155,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Wed Aug 24 2011 David Juran <david@juran.se> - 1.1.5-8
+- Rebuild for new mjpegtools (Bz 1906)
+
 * Sun Jun 26 2011 Nicolas Chauvet <kwizart@gmail.com> - 1.1.5-7
 - Fix support for v4l - rfbz#1824
 
