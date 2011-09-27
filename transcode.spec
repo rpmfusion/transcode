@@ -20,6 +20,7 @@ Patch4:	 transcode-1.1.5-fix_v4l.patch
 Patch5:	 transcode-1.1.5-no_video.patch
 Patch6:  transcode-1.1.5-videodev2.patch
 Patch7:  transcode-1.1.5-fix_v4l_1.patch
+Patch8:  transcode-ffmpeg.patch
 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -78,6 +79,7 @@ enable post-processing of AVI files.
 %patch5 -p1 -b .no_video
 %patch6 -p1 -b .videodev2
 %patch7 -p1 -b .fix_v4l_1
+%patch8 -p1 -b .ff08
 
 rm filter/preview/dv_types.h
 rm import/v4l/videodev.h
@@ -157,6 +159,7 @@ rm -rf $RPM_BUILD_ROOT
 %changelog
 * Mon Sep 26 2011 Nicolas Chauvet <kwizart@gmail.com> - 1.1.5-9
 - Rebuilt for FFmpeg-0.8
+- Add patch from Rathann
 
 * Wed Aug 24 2011 David Juran <david@juran.se> - 1.1.5-8
 - Rebuild for new mjpegtools (Bz 1906)
