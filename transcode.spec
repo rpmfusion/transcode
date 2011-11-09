@@ -6,21 +6,17 @@
 %define pvmdir  %{_datadir}/pvm3
 
 Name:           transcode
-Version:        1.1.5
-Release:        9%{?dist}
+Version:        1.1.6
+Release:        1%{?dist}
 Summary:        Video stream processing tool
 
 Group:          Applications/Multimedia
 License:        GPLv2+
-URL:            http://tcforge.berlios.de/
-Source0:        http://prdownload.berlios.de/tcforge/%{name}-%{version}.tar.bz2
+URL:            https://bitbucket.org/france/transcode-tcforge/overview
+Source0:        https://bitbucket.org/france/transcode-tcforge/downloads/transcode-%{version}.tar.bz2
 Patch0:         %{name}-pvmbin.patch
 Patch3:         transcode-1.0.4.external_dv.patch
-Patch4:	 transcode-1.1.5-fix_v4l.patch
-Patch5:	 transcode-1.1.5-no_video.patch
-Patch6:  transcode-1.1.5-videodev2.patch
-Patch7:  transcode-1.1.5-fix_v4l_1.patch
-Patch8:  transcode-ffmpeg.patch
+Patch4:         transcode-1.1.6.header.patch
 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -75,11 +71,7 @@ enable post-processing of AVI files.
 %setup -q
 %patch0 -p1 -b .pvmbin
 %patch3 -p1 -b .external_dv
-%patch4 -p1 -b .fix_v4l
-%patch5 -p1 -b .no_video
-%patch6 -p1 -b .videodev2
-%patch7 -p1 -b .fix_v4l_1
-%patch8 -p1 -b .ff08
+%patch4 -p1 -b .header
 
 rm filter/preview/dv_types.h
 rm import/v4l/videodev.h
@@ -157,6 +149,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Wed Nov 09 2011 Nicolas Chauvet <kwizart@gmail.com> - 1.1.6-1
+- Update to 1.1.6
+
 * Mon Sep 26 2011 Nicolas Chauvet <kwizart@gmail.com> - 1.1.5-9
 - Rebuilt for FFmpeg-0.8
 - Add patch from Rathann
