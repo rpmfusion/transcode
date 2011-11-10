@@ -7,7 +7,7 @@
 
 Name:           transcode
 Version:        1.1.6
-Release:        1%{?dist}
+Release:        1%{?dist}.1
 Summary:        Video stream processing tool
 
 Group:          Applications/Multimedia
