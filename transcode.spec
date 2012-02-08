@@ -7,7 +7,7 @@
 
 Name:           transcode
 Version:        1.1.7
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Video stream processing tool
 
 Group:          Applications/Multimedia
@@ -149,6 +149,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Wed Feb 08 2012 Nicolas Chauvet <kwizart@gmail.com> - 1.1.7-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_17_Mass_Rebuild
+
 * Sat Nov 19 2011 Nicolas Chauvet <kwizart@gmail.com> - 1.1.7-1
 - Update to 1.1.7
 
