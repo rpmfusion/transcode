@@ -7,7 +7,7 @@
 
 Name:           transcode
 Version:        1.1.7
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        Video stream processing tool
 
 Group:          Applications/Multimedia
@@ -33,7 +33,7 @@ BuildRequires:  xvidcore-devel
 BuildRequires:  libquicktime-devel >= 0.9.8
 BuildRequires:  lame-devel >= 3.89
 BuildRequires:  SDL-devel >= 1.1.6
-BuildRequires:  ffmpeg-devel >= 0.4.9-0.46.20080614
+#BuildRequires:  ffmpeg-devel >= 0.4.9-0.46.20080614
 BuildRequires:  mpeg2dec-devel >= 0.4.0
 BuildRequires:  libtheora-devel
 BuildRequires:	libXext-devel
@@ -88,10 +88,7 @@ done
         --disable-dependency-tracking                           \
         --disable-x86-textrels                                  \
         --with-x                                                \
-        --enable-libavcodec                                     \
-        --enable-libavformat                                    \
         --enable-alsa                                           \
-        --enable-libpostproc                                    \
         --enable-freetype2                                      \
         --enable-xvid                                           \
         --enable-x264                                           \
@@ -149,6 +146,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Fri Mar 09 2012 Nicolas Chauvet <kwizart@gmail.com> - 1.1.7-4
+- Disable ffmpeg - Broken
+
 * Mon Feb 27 2012 Nicolas Chauvet <kwizart@gmail.com> - 1.1.7-3
 - Rebuilt for x264/FFmpeg
 
