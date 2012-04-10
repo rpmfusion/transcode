@@ -7,7 +7,7 @@
 
 Name:           transcode
 Version:        1.1.7
-Release:        4%{?dist}
+Release:        5%{?dist}
 Summary:        Video stream processing tool
 
 Group:          Applications/Multimedia
@@ -148,6 +148,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Tue Apr 10 2012 Nicolas Chauvet <kwizart@gmail.com> - 1.1.7-5
+- Rebuilt
+
 * Fri Mar 09 2012 Nicolas Chauvet <kwizart@gmail.com> - 1.1.7-4
 - Disable FFmpeg libpostproc 
 
