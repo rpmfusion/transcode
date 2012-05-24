@@ -7,7 +7,7 @@
 
 Name:           transcode
 Version:        1.1.7
-Release:        5%{?dist}
+Release:        6%{?dist}
 Summary:        Video stream processing tool
 
 Group:          Applications/Multimedia
@@ -33,7 +33,7 @@ BuildRequires:  xvidcore-devel
 BuildRequires:  libquicktime-devel >= 0.9.8
 BuildRequires:  lame-devel >= 3.89
 BuildRequires:  SDL-devel >= 1.1.6
-BuildRequires:  ffmpeg-devel >= 0.4.9-0.46.20080614
+BuildRequires:  ffmpeg-compat-devel >= 0.4.9-0.46.20080614
 BuildRequires:  mpeg2dec-devel >= 0.4.0
 BuildRequires:  libtheora-devel
 BuildRequires:	libXext-devel
@@ -84,12 +84,14 @@ for file in docs/{man/*.1,export_mp2.txt,export_mpeg.txt,filter_dnr.txt} \
     iconv -f iso-8859-1 -t utf-8 $file > $file.utf8 && mv -f $file.utf8 $file
 done
 
+export PKG_CONFIG_LIBDIR="%{_libdir}/ffmpeg-compat/pkgconfig"
 %configure \
         --disable-dependency-tracking                           \
         --disable-x86-textrels                                  \
         --with-x                                                \
         --enable-libavcodec                                     \
         --enable-libavformat                                    \
+	--enable-libpostproc					\
         --enable-alsa                                           \
         --enable-freetype2                                      \
         --enable-xvid                                           \
@@ -148,6 +150,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Thu May 24 2012 Nicolas Chauvet <kwizart@gmail.com> - 1.1.7-6
+- Switch to ffmpeg-compat
+
 * Tue Apr 10 2012 Nicolas Chauvet <kwizart@gmail.com> - 1.1.7-5
 - Rebuilt
 
