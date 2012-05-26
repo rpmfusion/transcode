@@ -7,7 +7,7 @@
 
 Name:           transcode
 Version:        1.1.7
-Release:        6%{?dist}
+Release:        7%{?dist}
 Summary:        Video stream processing tool
 
 Group:          Applications/Multimedia
@@ -17,6 +17,7 @@ Source0:        https://bitbucket.org/france/transcode-tcforge/downloads/transco
 Patch0:         %{name}-pvmbin.patch
 Patch3:         transcode-1.0.4.external_dv.patch
 Patch4:         transcode-1.1.6.header.patch
+Patch5:         transcode-1.1.7-ffmpeg-compat.patch
 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -72,6 +73,7 @@ enable post-processing of AVI files.
 %patch0 -p1 -b .pvmbin
 %patch3 -p1 -b .external_dv
 %patch4 -p1 -b .header
+%patch5 -p1 -b .oldabi
 
 rm filter/preview/dv_types.h
 rm import/v4l/videodev.h
@@ -150,6 +152,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Sat May 26 2012 Nicolas Chauvet <kwizart@gmail.com> - 1.1.7-7
+- Fix for ffmpeg oldabi
+
 * Thu May 24 2012 Nicolas Chauvet <kwizart@gmail.com> - 1.1.7-6
 - Switch to ffmpeg-compat
 
