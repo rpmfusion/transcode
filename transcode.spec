@@ -78,6 +78,7 @@ enable post-processing of AVI files.
 rm filter/preview/dv_types.h
 rm import/v4l/videodev.h
 rm import/v4l/videodev2.h
+sed -i -e 's|libv4l1-videodev.h|linux/videodev.h|' import/probe_v4l.c
 
 %build
 autoreconf -f -i # for patch2, and fixes standard rpaths on lib64 archs
