@@ -7,7 +7,7 @@
 
 Name:           transcode
 Version:        1.1.7
-Release:        7%{?dist}
+Release:        7%{?dist}.1
 Summary:        Video stream processing tool
 
 Group:          Applications/Multimedia
@@ -51,7 +51,7 @@ BuildRequires:  nasm
 BuildRequires:  ImageMagick-devel
 BuildRequires:  libmpeg3-devel
 BuildRequires:	kernel-headers
-BuildRequires:	libv4l-devel
+#BuildRequires:	libv4l-devel
 
 # libtool + autotools for patch2, autoreconf
 BuildRequires:  libtool
@@ -121,8 +121,8 @@ export PKG_CONFIG_LIBDIR="%{_libdir}/ffmpeg-compat/pkgconfig"
 %endif
         --enable-deprecated					\
 	--enable-v4l						\
-	--enable-libv4l2					\
-	--enable-libv4lconvert					\
+	--disable-libv4l2					\
+	--disable-libv4lconvert					\
 	--enable-libmpeg2					\
 	--enable-libmpeg2convert
 
@@ -152,6 +152,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Mon May 28 2012 Nicolas Chauvet <kwizart@gmail.com> - 1.1.7-7.1
+- Disable libv4l for EL-6
+
 * Sat May 26 2012 Nicolas Chauvet <kwizart@gmail.com> - 1.1.7-7
 - Fix for ffmpeg oldabi
 
