@@ -7,7 +7,7 @@
 
 Name:           transcode
 Version:        1.1.7
-Release:        7%{?dist}
+Release:        8%{?dist}
 Summary:        Video stream processing tool
 
 Group:          Applications/Multimedia
@@ -152,6 +152,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Fri Nov 23 2012 Nicolas Chauvet <kwizart@gmail.com> - 1.1.7-8
+- Rebuilt for x264
+
 * Sat May 26 2012 Nicolas Chauvet <kwizart@gmail.com> - 1.1.7-7
 - Fix for ffmpeg oldabi
 
