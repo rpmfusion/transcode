@@ -7,7 +7,7 @@
 
 Name:           transcode
 Version:        1.1.7
-Release:        9%{?dist}
+Release:        10%{?dist}
 Summary:        Video stream processing tool
 
 Group:          Applications/Multimedia
@@ -152,6 +152,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Sun Nov 10 2013 Nicolas Chauvet <kwizart@gmail.com> - 1.1.7-10
+- Rebuilt for mjpegtools update to 2.1.0
+
 * Tue Apr 16 2013 Orion Poplawski <orion@cora.nwra.com> - 1.1.7-9
 - Rebuild for libjpeg soname revert
 
