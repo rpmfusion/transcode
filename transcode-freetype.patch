@@ -1,0 +1,13 @@
+diff -up transcode-1.1.7/filter/subtitler/load_font.c.freetype transcode-1.1.7/filter/subtitler/load_font.c
+--- transcode-1.1.7/filter/subtitler/load_font.c.freetype	2011-11-19 09:50:27.000000000 -0700
++++ transcode-1.1.7/filter/subtitler/load_font.c	2014-07-25 12:04:26.291655493 -0600
+@@ -47,8 +47,7 @@ Artur Zaprzala <zybi@fanthom.irc.pl>
+ // FreeType specific includes
+ #include <ft2build.h>
+ #include FT_FREETYPE_H
+-
+-#include <freetype/ftglyph.h>
++#include FT_GLYPH_H
+ 
+ /**
+  * @file bswap.h
