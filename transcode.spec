@@ -7,7 +7,7 @@
 
 Name:           transcode
 Version:        1.1.7
-Release:        11%{?dist}
+Release:        12%{?dist}
 Summary:        Video stream processing tool
 
 Group:          Applications/Multimedia
@@ -15,6 +15,7 @@ License:        GPLv2+
 URL:            https://bitbucket.org/france/transcode-tcforge/overview
 Source0:        https://bitbucket.org/france/transcode-tcforge/downloads/transcode-%{version}.tar.bz2
 Patch0:         %{name}-pvmbin.patch
+Patch1:         transcode-freetype.patch
 Patch3:         transcode-1.0.4.external_dv.patch
 Patch4:         transcode-1.1.6.header.patch
 Patch5:         transcode-1.1.7-ffmpeg-compat.patch
@@ -71,6 +72,7 @@ enable post-processing of AVI files.
 %prep
 %setup -q
 %patch0 -p1 -b .pvmbin
+%patch1 -p1 -b .freetype
 %patch3 -p1 -b .external_dv
 %patch4 -p1 -b .header
 %patch5 -p1 -b .oldabi
@@ -152,6 +154,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Fri Jul 25 2014 Orion Poplawski <orion@cora.nwra.com> - 1.1.7-12
+- Add patch to fix build with freetype 2.5
+
 * Thu Jul 24 2014 Orion Poplawski <orion@cora.nwra.com> - 1.1.7-11
 - Rebuild for new ImageMagick
 
