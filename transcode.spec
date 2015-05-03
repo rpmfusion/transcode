@@ -7,7 +7,7 @@
 
 Name:           transcode
 Version:        1.1.7
-Release:        12%{?dist}
+Release:        13%{?dist}
 Summary:        Video stream processing tool
 
 Group:          Applications/Multimedia
@@ -103,9 +103,11 @@ export PKG_CONFIG_LIBDIR="%{_libdir}/ffmpeg-compat/pkgconfig"
         --enable-ogg                                            \
         --enable-vorbis                                         \
         --enable-theora                                         \
+%ifarch %{ix86} x86_64
         --enable-pvm3                                           \
         --with-pvm3-libs=`ls -1d %{pvmdir}/lib/LINUX*`          \
         --with-pvm3-includes=%{pvmdir}/include                  \
+%endif
         --enable-libdv                                          \
         --enable-libquicktime                                   \
         --enable-a52                                            \
@@ -154,6 +156,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Sun May 03 2015 Nicolas Chauvet <kwizart@gmail.com> - 1.1.7-13
+- Disable pvm3 on arm - rhbz#986677
+
 * Fri Jul 25 2014 Orion Poplawski <orion@cora.nwra.com> - 1.1.7-12
 - Add patch to fix build with freetype 2.5
 
