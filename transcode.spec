@@ -7,7 +7,7 @@
 
 Name:           transcode
 Version:        1.1.7
-Release:        7%{?dist}.1
+Release:        7%{?dist}.2
 Summary:        Video stream processing tool
 
 Group:          Applications/Multimedia
@@ -18,8 +18,6 @@ Patch0:         %{name}-pvmbin.patch
 Patch3:         transcode-1.0.4.external_dv.patch
 Patch4:         transcode-1.1.6.header.patch
 Patch5:         transcode-1.1.7-ffmpeg-compat.patch
-
-BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildRequires:  libogg-devel
 BuildRequires:  libvorbis-devel
@@ -134,18 +132,12 @@ make %{?_smp_mflags}
 
 
 %install
-rm -rf $RPM_BUILD_ROOT __documentation
 make install DESTDIR=$RPM_BUILD_ROOT INSTALL="install -p"
 mv $RPM_BUILD_ROOT%{_docdir}/transcode/ __documentation
 find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 
 
-%clean
-rm -rf $RPM_BUILD_ROOT
-
-
 %files
-%defattr(-,root,root,-)
 %doc AUTHORS COPYING README* TODO __documentation/*
 %{_bindir}/*
 %{_libdir}/%{name}
@@ -153,6 +145,10 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Thu Jul 30 2015 Orion Poplawski <orion@cora.nwra.com> - 1.1.7-7.2
+- Rebuild for ImageMagick 6.7 in RHEL 6.7
+- Cleanup spec
+
 * Mon May 28 2012 Nicolas Chauvet <kwizart@gmail.com> - 1.1.7-7.1
 - Disable libv4l for EL-6
 
