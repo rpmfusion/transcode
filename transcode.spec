@@ -2,9 +2,6 @@
 # - avifile (ick): http://avifile.sourceforge.net/
 # - LoRS/IBP: http://loci.cs.utk.edu/
 
-# I bet this _will_ change in the future.
-%define pvmdir  %{_datadir}/pvm3
-
 Name:           transcode
 Version:        1.1.7
 Release:        7%{?dist}.2
@@ -14,7 +11,6 @@ Group:          Applications/Multimedia
 License:        GPLv2+
 URL:            https://bitbucket.org/france/transcode-tcforge/overview
 Source0:        https://bitbucket.org/france/transcode-tcforge/downloads/transcode-%{version}.tar.bz2
-Patch0:         %{name}-pvmbin.patch
 Patch3:         transcode-1.0.4.external_dv.patch
 Patch4:         transcode-1.1.6.header.patch
 Patch5:         transcode-1.1.7-ffmpeg-compat.patch
@@ -41,7 +37,6 @@ BuildRequires:  libXaw-devel
 BuildRequires:  libXpm-devel
 BuildRequires:  freetype-devel
 %{?_with_faac:BuildRequires: faac-devel}
-BuildRequires:  pvm
 BuildRequires:  x264-devel
 %ifarch %{ix86}
 BuildRequires:  nasm
@@ -68,7 +63,6 @@ enable post-processing of AVI files.
 
 %prep
 %setup -q
-%patch0 -p1 -b .pvmbin
 %patch3 -p1 -b .external_dv
 %patch4 -p1 -b .header
 %patch5 -p1 -b .oldabi
@@ -100,9 +94,6 @@ export PKG_CONFIG_LIBDIR="%{_libdir}/ffmpeg-compat/pkgconfig"
         --enable-ogg                                            \
         --enable-vorbis                                         \
         --enable-theora                                         \
-        --enable-pvm3                                           \
-        --with-pvm3-libs=`ls -1d %{pvmdir}/lib/LINUX*`          \
-        --with-pvm3-includes=%{pvmdir}/include                  \
         --enable-libdv                                          \
         --enable-libquicktime                                   \
         --enable-a52                                            \
@@ -148,6 +139,7 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 * Thu Jul 30 2015 Orion Poplawski <orion@cora.nwra.com> - 1.1.7-7.2
 - Rebuild for ImageMagick 6.7 in RHEL 6.7
 - Cleanup spec
+- Drop pvm support, no longer in EPEL6
 
 * Mon May 28 2012 Nicolas Chauvet <kwizart@gmail.com> - 1.1.7-7.1
 - Disable libv4l for EL-6
