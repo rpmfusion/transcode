@@ -2,12 +2,9 @@
 # - avifile (ick): http://avifile.sourceforge.net/
 # - LoRS/IBP: http://loci.cs.utk.edu/
 
-# I bet this _will_ change in the future.
-%define pvmdir  %{_datadir}/pvm3
-
 Name:           transcode
 Version:        1.1.7
-Release:        13%{?dist}
+Release:        14%{?dist}
 Summary:        Video stream processing tool
 
 Group:          Applications/Multimedia
@@ -18,9 +15,25 @@ Patch0:         %{name}-pvmbin.patch
 Patch1:         transcode-freetype.patch
 Patch3:         transcode-1.0.4.external_dv.patch
 Patch4:         transcode-1.1.6.header.patch
-Patch5:         transcode-1.1.7-ffmpeg-compat.patch
+Patch5:         transcode-debian-697558.patch
+#Debian patch series
+#Patch22:         04_ffmpeg_options.patch
+Patch23:         ac3-audio-track-number.patch
+#Patch26:         07_libav9-preset.patch
+#Patch27:         08_libav9-opt.patch
+Patch31:         12_underlinkage.patch
+# Gentoo / Archlinux patch series
+Patch50:         transcode-1.1.7-ffmpeg.patch
+Patch51:         transcode-1.1.7-ffmpeg-0.10.patch
+Patch52:         transcode-1.1.7-ffmpeg-0.11.patch
+Patch53:         transcode-1.1.7-preset-free.patch
+Patch54:         transcode-1.1.7-libav-9.patch
+Patch55:         transcode-1.1.7-preset-force.patch
+Patch56:         transcode-1.1.7-ffmpeg2.patch
+Patch57:         transcode-1.1.7-ffmpeg-2.4.patch
+Patch58:         transcode-1.1.7-ffmpeg29.patch
+Patch59:         transcode-ffmpeg3.patch
 
-BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildRequires:  libogg-devel
 BuildRequires:  libvorbis-devel
@@ -35,24 +48,23 @@ BuildRequires:  xvidcore-devel
 BuildRequires:  libquicktime-devel >= 0.9.8
 BuildRequires:  lame-devel >= 3.89
 BuildRequires:  SDL-devel >= 1.1.6
-BuildRequires:  ffmpeg-compat-devel >= 0.4.9-0.46.20080614
+BuildRequires:  ffmpeg-devel
 BuildRequires:  mpeg2dec-devel >= 0.4.0
 BuildRequires:  libtheora-devel
-BuildRequires:	libXext-devel
+BuildRequires:  libXext-devel
 BuildRequires:  libXv-devel
 BuildRequires:  libXaw-devel
 BuildRequires:  libXpm-devel
 BuildRequires:  freetype-devel
 %{?_with_faac:BuildRequires: faac-devel}
-BuildRequires:  pvm
 BuildRequires:  x264-devel
 %ifarch %{ix86}
 BuildRequires:  nasm
 %endif
 BuildRequires:  ImageMagick-devel
 BuildRequires:  libmpeg3-devel
-BuildRequires:	kernel-headers
-BuildRequires:	libv4l-devel
+BuildRequires:  kernel-headers
+BuildRequires:  libv4l-devel
 
 # libtool + autotools for patch2, autoreconf
 BuildRequires:  libtool
@@ -75,27 +87,45 @@ enable post-processing of AVI files.
 %patch1 -p1 -b .freetype
 %patch3 -p1 -b .external_dv
 %patch4 -p1 -b .header
-%patch5 -p1 -b .oldabi
+%patch5 -p1 -b .strdup
 
 rm filter/preview/dv_types.h
 rm import/v4l/videodev.h
 rm import/v4l/videodev2.h
 
+%patch50 -p0
+%patch51 -p0
+%patch52 -p1
+%patch53 -p1
+%patch54 -p0
+%patch55 -p1
+%patch56 -p1
+%patch57 -p1
+%patch58 -p1
+%patch59 -p1
+
+#patch22 -p1 to see
+%patch23 -p1
+#patch26 -p1 to see
+#patch27 -p1 to see
+%patch31 -p1
+
+mv configure.in configure.ac
+
 %build
-autoreconf -f -i # for patch2, and fixes standard rpaths on lib64 archs
+autoreconf -i
 for file in docs/{man/*.1,export_mp2.txt,export_mpeg.txt,filter_dnr.txt} \
     AUTHORS ChangeLog README docs/README.vcd ; do
     iconv -f iso-8859-1 -t utf-8 $file > $file.utf8 && mv -f $file.utf8 $file
 done
 
-export PKG_CONFIG_LIBDIR="%{_libdir}/ffmpeg-compat/pkgconfig"
 %configure \
         --disable-dependency-tracking                           \
         --disable-x86-textrels                                  \
         --with-x                                                \
         --enable-libavcodec                                     \
         --enable-libavformat                                    \
-	--enable-libpostproc					\
+        --enable-libpostproc                                    \
         --enable-alsa                                           \
         --enable-freetype2                                      \
         --enable-xvid                                           \
@@ -103,11 +133,6 @@ export PKG_CONFIG_LIBDIR="%{_libdir}/ffmpeg-compat/pkgconfig"
         --enable-ogg                                            \
         --enable-vorbis                                         \
         --enable-theora                                         \
-%ifarch %{ix86} x86_64
-        --enable-pvm3                                           \
-        --with-pvm3-libs=`ls -1d %{pvmdir}/lib/LINUX*`          \
-        --with-pvm3-includes=%{pvmdir}/include                  \
-%endif
         --enable-libdv                                          \
         --enable-libquicktime                                   \
         --enable-a52                                            \
@@ -123,39 +148,43 @@ export PKG_CONFIG_LIBDIR="%{_libdir}/ffmpeg-compat/pkgconfig"
 %ifarch %{ix86} x86_64
         --enable-nuv                                            \
 %endif
-        --enable-deprecated					\
-	--enable-v4l						\
-	--enable-libv4l2					\
-	--enable-libv4lconvert					\
-	--enable-libmpeg2					\
-	--enable-libmpeg2convert
+        --enable-deprecated                 \
+    --enable-v4l                        \
+    --enable-libv4l2                    \
+    --enable-libv4lconvert                  \
+    --enable-libmpeg2                   \
+    --enable-libmpeg2convert
 
-
-
+# arch linux suggestion:
+#    --disable-sse --disable-sse2 --disable-altivec --enable-mmx
 
 make %{?_smp_mflags}
 
 
 %install
-rm -rf $RPM_BUILD_ROOT __documentation
 make install DESTDIR=$RPM_BUILD_ROOT INSTALL="install -p"
-mv $RPM_BUILD_ROOT%{_docdir}/transcode/ __documentation
 find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 
 
-%clean
-rm -rf $RPM_BUILD_ROOT
-
-
 %files
-%defattr(-,root,root,-)
-%doc AUTHORS COPYING README* TODO __documentation/*
+%doc AUTHORS README* TODO
+%license COPYING
 %{_bindir}/*
 %{_libdir}/%{name}
 %{_mandir}/man1/*.1*
+%{_docdir}/transcode/
 
 
 %changelog
+* Mon Feb 29 2016 Sérgio Basto <sergio@serjux.com> - 1.1.7-14
+- Add all archlinux/gentoo patches make it compatible with lastest ffmpeg.
+- Build with ffmpeg-devel and not ffmpeg-compat.
+- Remove PVM3 because was retired in F23.
+- Add license tag.
+- Some cleanups.
+- Add 2 pacthes from Debian.
+- Add transcode-debian-697558.patch (rfbz #1337)
+
 * Sun May 03 2015 Nicolas Chauvet <kwizart@gmail.com> - 1.1.7-13
 - Disable pvm3 on arm - rhbz#986677
 
