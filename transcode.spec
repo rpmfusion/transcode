@@ -4,7 +4,7 @@
 
 Name:           transcode
 Version:        1.1.7
-Release:        16%{?dist}
+Release:        17%{?dist}
 Summary:        Video stream processing tool
 
 Group:          Applications/Multimedia
@@ -176,6 +176,9 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 
 
 %changelog
+* Sat Sep 17 2016 Leigh Scott <leigh123linux@googlemail.com> - 1.1.7-17
+- Redo patch
+
 * Sat Sep 17 2016 Leigh Scott <leigh123linux@googlemail.com> - 1.1.7-16
 - Add patch
 
