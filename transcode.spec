@@ -177,7 +177,7 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 
 %changelog
 * Sat Sep 17 2016 Leigh Scott <leigh123linux@googlemail.com> - 1.1.7-15
-- Patch to rename avcodec_encode_audio to avcodec_encode_audio2
+- Patch to rename avcodec_encode_audio to avcodec_encode_audio2 rfbz#4262
 
 * Mon Feb 29 2016 Sérgio Basto <sergio@serjux.com> - 1.1.7-14
 - Add all archlinux/gentoo patches make it compatible with lastest ffmpeg.
