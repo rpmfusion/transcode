@@ -211,3 +211,24 @@
      {"MPG2", ""}},
    {0, TC_CODEC_UNKNOWN, NULL, {""}}};
  
+--- a/export/aud_aux.c
++++ b/export/aud_aux.c
+@@ -867,7 +867,7 @@
+     ac_memcpy(&mpa_buf[mpa_buf_ptr], in_buf, bytes_needed);
+ 
+     TC_LOCK_LIBAVCODEC;
+-    out_size = avcodec_encode_audio(&mpa_ctx, (unsigned char *)output,
++    out_size = avcodec_encode_audio2(&mpa_ctx, (unsigned char *)output,
+                     OUTPUT_SIZE, (short *)mpa_buf);
+     TC_UNLOCK_LIBAVCODEC;
+     tc_audio_write(output, out_size, avifile);
+@@ -894,7 +894,7 @@
+ 
+     while (in_size >= mpa_bytes_pf) {
+       TC_LOCK_LIBAVCODEC;
+-      out_size = avcodec_encode_audio(&mpa_ctx, (unsigned char *)output,
++      out_size = avcodec_encode_audio2(&mpa_ctx, (unsigned char *)output,
+                       OUTPUT_SIZE, (short *)in_buf);
+       TC_UNLOCK_LIBAVCODEC;
+ 
+

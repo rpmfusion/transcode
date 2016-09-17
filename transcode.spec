@@ -4,7 +4,7 @@
 
 Name:           transcode
 Version:        1.1.7
-Release:        15%{?dist}
+Release:        16%{?dist}
 Summary:        Video stream processing tool
 
 Group:          Applications/Multimedia
@@ -176,6 +176,9 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 
 
 %changelog
+* Sat Sep 17 2016 Leigh Scott <leigh123linux@googlemail.com> - 1.1.7-16
+- Add patch
+
 * Sat Sep 17 2016 Leigh Scott <leigh123linux@googlemail.com> - 1.1.7-15
 - Patch to rename avcodec_encode_audio to avcodec_encode_audio2 rfbz#4262
 
