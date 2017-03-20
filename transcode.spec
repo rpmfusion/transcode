@@ -4,7 +4,7 @@
 
 Name:           transcode
 Version:        1.1.7
-Release:        17%{?dist}
+Release:        18%{?dist}
 Summary:        Video stream processing tool
 
 Group:          Applications/Multimedia
@@ -176,6 +176,9 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 
 
 %changelog
+* Mon Mar 20 2017 RPM Fusion Release Engineering <kwizart@rpmfusion.org> - 1.1.7-18
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_26_Mass_Rebuild
+
 * Sat Sep 17 2016 Leigh Scott <leigh123linux@googlemail.com> - 1.1.7-17
 - Redo patch
 
