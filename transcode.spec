@@ -4,7 +4,7 @@
 
 Name:           transcode
 Version:        1.1.7
-Release:        19%{?dist}
+Release:        20%{?dist}
 Summary:        Video stream processing tool
 
 Group:          Applications/Multimedia
@@ -176,6 +176,9 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 
 
 %changelog
+* Sun Aug 27 2017 Nicolas Chauvet <kwizart@gmail.com> - 1.1.7-20
+- Rebuilt for ImageMagick
+
 * Sat Apr 29 2017 Leigh Scott <leigh123linux@googlemail.com> - 1.1.7-19
 - Rebuild for ffmpeg update
 
