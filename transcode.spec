@@ -4,7 +4,7 @@
 
 Name:           transcode
 Version:        1.1.7
-Release:        21%{?dist}
+Release:        22%{?dist}
 Summary:        Video stream processing tool
 
 Group:          Applications/Multimedia
@@ -22,17 +22,9 @@ Patch23:         ac3-audio-track-number.patch
 #Patch26:         07_libav9-preset.patch
 #Patch27:         08_libav9-opt.patch
 Patch31:         12_underlinkage.patch
-# Gentoo / Archlinux patch series
-Patch50:         transcode-1.1.7-ffmpeg.patch
-Patch51:         transcode-1.1.7-ffmpeg-0.10.patch
-Patch52:         transcode-1.1.7-ffmpeg-0.11.patch
-Patch53:         transcode-1.1.7-preset-free.patch
-Patch54:         transcode-1.1.7-libav-9.patch
-Patch55:         transcode-1.1.7-preset-force.patch
-Patch56:         transcode-1.1.7-ffmpeg2.patch
-Patch57:         transcode-1.1.7-ffmpeg-2.4.patch
-Patch58:         transcode-1.1.7-ffmpeg29.patch
-Patch59:         transcode-ffmpeg3.patch
+# linuxfromscratch patch
+# http://www.linuxfromscratch.org/blfs/view/cvs/multimedia/transcode.html
+Patch60:         transcode-1.1.7-ffmpeg3-1.patch
 
 
 BuildRequires:  libogg-devel
@@ -45,7 +37,6 @@ BuildRequires:  lzo-devel >= 2
 BuildRequires:  mjpegtools-devel
 BuildRequires:  libdv-devel
 BuildRequires:  xvidcore-devel
-BuildRequires:  libquicktime-devel >= 0.9.8
 BuildRequires:  lame-devel >= 3.89
 BuildRequires:  SDL-devel >= 1.1.6
 BuildRequires:  ffmpeg-devel
@@ -93,21 +84,9 @@ rm filter/preview/dv_types.h
 rm import/v4l/videodev.h
 rm import/v4l/videodev2.h
 
-%patch50 -p0
-%patch51 -p0
-%patch52 -p1
-%patch53 -p1
-%patch54 -p0
-%patch55 -p1
-%patch56 -p1
-%patch57 -p1
-%patch58 -p1
-%patch59 -p1
+%patch60 -p1
 
-#patch22 -p1 to see
 %patch23 -p1
-#patch26 -p1 to see
-#patch27 -p1 to see
 %patch31 -p1
 
 mv configure.in configure.ac
@@ -134,7 +113,6 @@ done
         --enable-vorbis                                         \
         --enable-theora                                         \
         --enable-libdv                                          \
-        --enable-libquicktime                                   \
         --enable-a52                                            \
         --enable-lzo                                            \
   %{?_with_faac:--enable-faac}                                  \
@@ -176,6 +154,9 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 
 
 %changelog
+* Sun Jan 21 2018 Leigh Scott <leigh123linux@googlemail.com> - 1.1.7-22
+- Use single patch for ffmpeg
+
 * Thu Jan 18 2018 Leigh Scott <leigh123linux@googlemail.com> - 1.1.7-21
 - Rebuilt for ffmpeg-3.5 git
 
