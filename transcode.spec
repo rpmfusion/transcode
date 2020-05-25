@@ -49,7 +49,7 @@ BuildRequires:  libquicktime-devel >= 0.9.8
 BuildRequires:  lame-devel >= 3.89
 BuildRequires:  SDL-devel >= 1.1.6
 BuildRequires:  ffmpeg-devel
-BuildRequires:  mpeg2dec-devel >= 0.4.0
+BuildRequires:  libmpeg2-devel
 BuildRequires:  libtheora-devel
 BuildRequires:  libXext-devel
 BuildRequires:  libXv-devel
